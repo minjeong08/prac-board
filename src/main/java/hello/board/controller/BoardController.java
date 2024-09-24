@@ -1,9 +1,11 @@
 package hello.board.controller;
 
 import hello.board.domain.Board;
+import hello.board.security.SecurityUser;
 import hello.board.service.BoardServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +39,9 @@ public class BoardController {
     }
 
     @PostMapping("/insertBoard")
-    public String insertBoard(Board board) {
+    public String insertBoard(Board board,
+                              @AuthenticationPrincipal SecurityUser principal) {
+        board.setMember(principal.getMember());
         boardService.insertBoard(board);
         return "redirect:/board/getBoardList";
     }
