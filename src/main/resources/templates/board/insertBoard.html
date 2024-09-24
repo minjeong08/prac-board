@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>새 글 등록</title>
@@ -9,12 +10,12 @@
     <form th:action="@{/board/insertBoard}" method="post">
     <table>
         <tr>
-            <td>제목</td>
+            <td th:text="제목"></td>
             <td><input name="title" type="text"></td>
         </tr>
         <tr>
-            <td>작성자</td>
-            <td><input name="writer" type="text"></td>
+            <td th:text="작성자"></td>
+            <td><span sec:authentication="principal.member.name"></span></td>
         </tr>
         <tr>
             <td th:text="내용"></td>

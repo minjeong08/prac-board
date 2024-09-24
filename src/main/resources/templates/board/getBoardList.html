@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>게시글 목록</title>
 </head>
 <body>
     <h1>게시글 목록</h1>
+
+    <span sec:authorize="isAuthenticated()">
+        <b><span sec:authentication="principal.member.name"></span></b>님 안녕하세요.
+    </span>
     <a th:href="@{/system/logout}">로그아웃</a>&nbsp;&nbsp;&nbsp;
     <a th:href="@{/admin/adminPage}">게시판 관리</a>
+
     <hr>
     <table>
         <tr>
