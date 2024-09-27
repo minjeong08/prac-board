@@ -1,40 +1,51 @@
 package hello.board.security;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
+@Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
-public class SecurityConfig extends WebSecurityConfiguration {
+public class SecurityConfig {
 
-    private final SecurityUserDetailsService userDetailsService;
+    @Autowired
+    private SecurityUserDetailsService userDetailsService;
 
-    protected void configure(HttpSecurity security) throws Exception {
-        security.userDetailsService(userDetailsService);
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.userDetailsService(userDetailsService);
 
-        security.authorizeHttpRequests(authorize ->
-                authorize.requestMatchers("/", "/system/**").permitAll()
-        );
+        http
+                .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/", "/system/**").permitAll()
+                        .requestMatchers("/board/**").authenticated()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                )
+                .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(form -> form
+                        .loginPage("/system/login")
+                        .defaultSuccessUrl("/board/getBoardList", true)
+                )
+                .exceptionHandling((exceptionHandling) -> exceptionHandling
+                        .accessDeniedPage("/system/accessDenied")
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/system/logout")
+                        .logoutSuccessUrl("/system/logout")
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/system/logout")
+                        .invalidateHttpSession(true)
+                        .logoutSuccessUrl("/system/logout")
+                );
 
-        security.authorizeHttpRequests(authorize ->
-                authorize.requestMatchers("/board/**").authenticated()
-        );
-
-        security.authorizeHttpRequests(authorize ->
-                authorize.requestMatchers("/admin/**").hasRole("ROLE_ADMIN")
-        );
-
-        security.csrf(AbstractHttpConfigurer::disable);
-        security.oauth2Login(oauth2 -> oauth2
-                .loginPage("/system/login").defaultSuccessUrl("/board/getBoardList", true));
-        security.exceptionHandling((exceptions) -> exceptions.accessDeniedPage("/system/accessDenied"));
-        security.logout((logout) -> logout.logoutUrl("/system/logout").invalidateHttpSession(true).logoutSuccessUrl("/"));
+        return http.build();
     }
 
     @Bean
