@@ -37,6 +37,6 @@ public class BoardServiceImpl implements BoardService {
 
     public Page<Board> getBoardList(Board board) {
         Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "seq");
-        return boardRepository.getBoradList(pageable);
+        return boardRepository.getBoardList(pageable);
     }
 }

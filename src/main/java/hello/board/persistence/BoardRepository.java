@@ -9,5 +9,5 @@ import org.springframework.data.repository.CrudRepository;
 public interface BoardRepository extends CrudRepository<Board, Long> {
 
     @Query("SELECT b From Board b")
-    Page<Board> getBoradList(Pageable pageable);
+    Page<Board> getBoardList(Pageable pageable);
 }
