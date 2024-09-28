@@ -31,10 +31,9 @@
             <td th:text="조회수"></td>
             <td th:text="${board.cnt}"></td>
         </tr>
-        <tr>
+        <tr th:if="${board.member.id} == ${#authentication.name}">
             <td colspan="2">
                 <input type="submit" value="수정">
-                <a th:href="@{/board/deleteBoard(seq=${board.seq})}">삭제</a>
                 <a href="#" onclick="submitDeleteForm()">글 삭제</a>
             </td>
         </tr>
