@@ -25,7 +25,7 @@
         </tr>
         <tr>
             <td th:text="등록일"></td>
-            <td th:text="${#dates.format(board.createDate, 'yyyy-MM-dd')}"></td>
+            <td th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd')}"></td>
         </tr>
         <tr>
             <td th:text="조회수"></td>

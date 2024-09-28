@@ -26,7 +26,7 @@
             <td th:text="${state.count}"></td>
             <td><a th:href="@{/board/getBoard(seq=${board.seq})}" th:text="${board.title}"></a></td>
             <td th:text="${board.member.name}"></td>
-            <td th:text="${#dates.format(board.createDate, 'yyyy-MM-dd')}"></td>
+            <td th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd')}"></td>
             <td th:text="${board.cnt}"></td>
         </tr>
     </table>
