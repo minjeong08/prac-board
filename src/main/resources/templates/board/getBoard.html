@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>게시글 상세</title>
@@ -35,14 +34,22 @@
         <tr>
             <td colspan="2">
                 <input type="submit" value="수정">
-                <a th:href="${/board/deleteBoard(seq=${board.seq})}">삭제</a>
+                <a th:href="@{/board/deleteBoard(seq=${board.seq})}">삭제</a>
+                <a href="#" onclick="submitDeleteForm()">글 삭제</a>
             </td>
         </tr>
     </table>
     </form>
     <br>
-    <a th:href="${/board/getBoardList}">글목록</a>&nbsp;&nbsp;&nbsp;
-    <a th:href="${/board/insertBoard}">게시글 등록</a>
-    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="${/board/deleteBoard(seq=${board.seq})}">글 삭제</a>
+    <a th:href="@{/board/getBoardList}">글목록</a>&nbsp;&nbsp;&nbsp;
+    <a th:href="@{/board/insertBoard}">게시글 등록</a>
+    <a href="#" sec:authorize="hasRole('ROLE_ADMIN')" onclick="submitDeleteForm()">글 삭제</a>
+
+    <form id="deleteForm" th:action="@{/board/deleteBoard(seq=${board.seq})}" method="post" style="display:none;"></form>
+    <script>
+        function submitDeleteForm() {
+            document.getElementById('deleteForm').submit();
+        }
+    </script>
 </body>
 </html>

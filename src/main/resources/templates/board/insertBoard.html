@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>새 글 등록</title>
@@ -28,6 +27,6 @@
         </tr>
     </table>
     </form>
-<a th:href="${/board/insertBoard}">게시글 등록</a>
+<a th:href="@{/board/insertBoard}">게시글 등록</a>
 </body>
 </html>
