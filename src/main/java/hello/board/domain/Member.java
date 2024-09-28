@@ -8,7 +8,7 @@ import lombok.ToString;
 import java.util.ArrayList;
 import java.util.List;
 
-import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.FetchType.EAGER;
 
 @Getter @Setter
 @ToString(exclude = "boardList")
@@ -28,6 +28,6 @@ public class Member {
 
     private Boolean enabled;
 
-    @OneToMany(mappedBy = "member", fetch = LAZY)
+    @OneToMany(mappedBy = "member", fetch = EAGER)
     private List<Board> boardList = new ArrayList<Board>();
 }
