@@ -49,12 +49,12 @@ public class BoardController {
     @PostMapping("/updateBoard")
     public String updateBoard(Board board) {
         boardService.updateBoard(board);
-        return "forward:/board/getBoardList";
+        return "redirect:/board/getBoardList";
     }
 
     @PostMapping("/deleteBoard")
     public String deleteBoard(Board board) {
         boardService.deleteBoard(board);
-        return "forward:/board/getBoardList";
+        return "redirect:/board/getBoardList";
     }
 }
